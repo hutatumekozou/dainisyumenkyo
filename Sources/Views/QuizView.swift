@@ -49,48 +49,101 @@ struct QuizView: View {
                         .padding(.horizontal)
                     
                     // 選択肢
-                    VStack(spacing: 12) {
-                        ForEach(0..<questions[currentQuestionIndex].choices.count, id: \.self) { index in
+                    if topic.isMaruBatsu {
+                        HStack(spacing: 0) {
+                            // ◯ Button (Index 0)
                             Button(action: {
                                 if selectedAnswer == nil {
-                                    selectedAnswer = index
+                                    selectedAnswer = 0
                                     showExplanation = true
                                 }
                             }) {
-                                HStack(alignment: .top, spacing: 12) {
-                                    Text(questions[currentQuestionIndex].choices[index])
-                                        .font(.body)
-                                        .foregroundColor(.black)
-                                        .multilineTextAlignment(.leading)
-                                    Spacer()
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color(red: 0.9, green: 0.4, blue: 0.4)) // Red
+                                    
+                                    Circle()
+                                        .stroke(Color.white, lineWidth: 8)
+                                        .frame(width: 80, height: 80)
                                 }
-                                .padding()
-                                .frame(maxWidth: .infinity, minHeight: 50)
-                                .background(
-                                    Group {
-                                        if showExplanation {
-                                            if index == questions[currentQuestionIndex].answerIndex {
-                                                Color.green.opacity(0.3)
-                                            } else if index == selectedAnswer {
-                                                Color.red.opacity(0.3)
-                                            } else {
-                                                Color.white
-                                            }
-                                        } else {
-                                            Color.white
-                                        }
-                                    }
-                                )
-                                .cornerRadius(8)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.gray, lineWidth: 1)
-                                )
+                                .frame(height: 200)
+                                .opacity(showExplanation && selectedAnswer != 0 ? 0.5 : 1.0)
+                            }
+                            .disabled(selectedAnswer != nil)
+                            
+                            // ✕ Button (Index 1)
+                            Button(action: {
+                                if selectedAnswer == nil {
+                                    selectedAnswer = 1
+                                    showExplanation = true
+                                }
+                            }) {
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color(red: 0.4, green: 0.4, blue: 0.9)) // Blue
+                                    
+                                    Image(systemName: "multiply")
+                                        .resizable()
+                                        .foregroundColor(.white)
+                                        .frame(width: 80, height: 80)
+                                }
+                                .frame(height: 200)
+                                .opacity(showExplanation && selectedAnswer != 1 ? 0.5 : 1.0)
                             }
                             .disabled(selectedAnswer != nil)
                         }
+                        .cornerRadius(20)
+                        .padding(.horizontal)
+                        .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(selectedAnswer != nil ? Color.black : Color.clear, lineWidth: 4)
+                                .padding(.horizontal)
+                        )
+                    } else {
+                        VStack(spacing: 12) {
+                            ForEach(0..<questions[currentQuestionIndex].choices.count, id: \.self) { index in
+                                Button(action: {
+                                    if selectedAnswer == nil {
+                                        selectedAnswer = index
+                                        showExplanation = true
+                                    }
+                                }) {
+                                    HStack(alignment: .top, spacing: 12) {
+                                        Text(questions[currentQuestionIndex].choices[index])
+                                            .font(.body)
+                                            .foregroundColor(.black)
+                                            .multilineTextAlignment(.leading)
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: .infinity, minHeight: 50)
+                                    .background(
+                                        Group {
+                                            if showExplanation {
+                                                if index == questions[currentQuestionIndex].answerIndex {
+                                                    Color.green.opacity(0.3)
+                                                } else if index == selectedAnswer {
+                                                    Color.red.opacity(0.3)
+                                                } else {
+                                                    Color.white
+                                                }
+                                            } else {
+                                                Color.white
+                                            }
+                                        }
+                                    )
+                                    .cornerRadius(8)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.gray, lineWidth: 1)
+                                    )
+                                }
+                                .disabled(selectedAnswer != nil)
+                            }
+                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                     
                     // 正解・不正解表示と解説
                     if showExplanation {

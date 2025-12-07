@@ -18,17 +18,17 @@ struct HomeView: View {
                 VStack(spacing: 20) {
                     // タイトルセクション
                     VStack(spacing: 8) {
-                        Text("日本語検定")
+                        Text("福祉住環境")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
                         
-                        Text("3級対策クイズ")
+                        Text("コーディネーター2級")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
                         
-                        Text("50問演習")
+                        Text("問題集")
                             .font(.system(size: 48, weight: .bold))
                             .fontWeight(.bold)
                             .foregroundColor(.black)
@@ -37,7 +37,10 @@ struct HomeView: View {
                     
                     // クイズボタングリッド
                     ScrollView {
-                        LazyVStack(spacing: 16) {
+                        LazyVGrid(columns: [
+                            GridItem(.flexible(), spacing: 16),
+                            GridItem(.flexible(), spacing: 16)
+                        ], spacing: 16) {
                             ForEach(QuizTopic.allCases) { topic in
                                 NavigationLink(destination: QuizView(topic: topic)) {
                                     Text(topic.title)
@@ -51,7 +54,8 @@ struct HomeView: View {
                                 .buttonStyle(PlainButtonStyle())
                             }
                         }
-                        .padding(.horizontal, 32)
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 20)
                     }
                     
                     Spacer()

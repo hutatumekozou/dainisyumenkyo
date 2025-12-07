@@ -21,7 +21,8 @@ class QuizRepository: ObservableObject {
             }
             
             let shuffled = source.shuffled()
-            return Array(shuffled.prefix(min(10, shuffled.count)))
+            let limit = topic.isMaruBatsu ? 12 : 10
+            return Array(shuffled.prefix(min(limit, shuffled.count)))
         } catch {
             print("Decoding error for \(topic.fileName): \(error)")
             return []
