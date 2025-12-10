@@ -21,6 +21,8 @@ enum QuizTopic: CaseIterable, Identifiable {
     case marubatsuHealthDisabilities3
     case selectionHealthDisabilities
     case selectionHealthDisabilities2
+    case marubatsuLivingEnvironment
+    case selectionLivingEnvironment
     
     var id: String { category }
     
@@ -47,6 +49,8 @@ enum QuizTopic: CaseIterable, Identifiable {
         case .marubatsuHealthDisabilities3: return "【◯✖️】健康・障害3"
         case .selectionHealthDisabilities: return "【選択】健康・障害"
         case .selectionHealthDisabilities2: return "【選択】健康・障害2"
+        case .marubatsuLivingEnvironment: return "【◯✖️】住環境整備"
+        case .selectionLivingEnvironment: return "【選択】住環境整備"
         }
     }
     
@@ -71,12 +75,14 @@ enum QuizTopic: CaseIterable, Identifiable {
         case .marubatsuHealthDisabilities3: return "marubatsu_health_disabilities_3"
         case .selectionHealthDisabilities: return "selection_health_disability"
         case .selectionHealthDisabilities2: return "selection_health_disability_2"
+        case .marubatsuLivingEnvironment: return "marubatsu_living_environment"
+        case .selectionLivingEnvironment: return "selection_living_environment"
         }
     }
     
     var isMaruBatsu: Bool {
         switch self {
-        case .marubatsuElderlyDisabled, .marubatsuElderlyDisabled2, .marubatsuElderlyDisabled3, .marubatsuHealthDisabilities, .marubatsuHealthDisabilities2, .marubatsuHealthDisabilities3:
+        case .marubatsuElderlyDisabled, .marubatsuElderlyDisabled2, .marubatsuElderlyDisabled3, .marubatsuHealthDisabilities, .marubatsuHealthDisabilities2, .marubatsuHealthDisabilities3, .marubatsuLivingEnvironment:
             return true
         default:
             return false
@@ -88,6 +94,7 @@ enum QuizChapter: String, CaseIterable, Identifiable {
     case general = "総合"
     case elderly = "①高齢者障害者"
     case health = "②健康・障害"
+    case environment = "③住環境整備"
     
     var id: String { rawValue }
     
@@ -118,6 +125,11 @@ enum QuizChapter: String, CaseIterable, Identifiable {
                 .selectionHealthDisabilities,
                 .selectionHealthDisabilities2
             ]
+        case .environment:
+            return [
+                .marubatsuLivingEnvironment,
+                .selectionLivingEnvironment
+            ]
         }
     }
     
@@ -129,6 +141,8 @@ enum QuizChapter: String, CaseIterable, Identifiable {
             return Color(red: 0.8, green: 0.4, blue: 0.2) // Orange-ish (Just to differentiate if needed, or stick to theme)
         case .health:
             return Color(red: 0.2, green: 0.6, blue: 0.4) // Green-ish
+        case .environment:
+            return Color(red: 0.5, green: 0.2, blue: 0.8) // Purple-ish
         }
     }
 }
