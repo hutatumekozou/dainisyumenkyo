@@ -1,0 +1,10 @@
+.DS_Store
+UserInterfaceState.xcuserstate
+DerivedData/
+build/
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.perspectivev3

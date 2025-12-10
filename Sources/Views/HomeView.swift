@@ -1,19 +1,31 @@
 import SwiftUI
 
+struct BackgroundView: View {
+    var body: some View {
+        ZStack {
+            // 背景色（余白用）
+            Color(UIColor.systemBackground)
+                .ignoresSafeArea()
+            
+            // 背景画像（全体が見えるようにFitさせる）
+            GeometryReader { geo in
+                Image("LaunchBackground")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .center)
+            }
+            .ignoresSafeArea()
+        }
+    }
+}
+
+
 struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // グラデーション背景
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color(red: 0.6, green: 0.8, blue: 1.0),
-                        Color(red: 0.4, green: 0.6, blue: 0.9)
-                    ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                // ★ 背景画像
+                BackgroundView()
                 
                 VStack(spacing: 20) {
                     // タイトルセクション
@@ -80,15 +92,8 @@ struct ChapterView: View {
     var body: some View {
         ZStack {
             // グラデーション背景 (HomeViewと同じ)
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.6, green: 0.8, blue: 1.0),
-                    Color(red: 0.4, green: 0.6, blue: 0.9)
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // ★ 背景画像 (HomeViewと同じ)
+            BackgroundView()
             
             VStack(spacing: 20) {
                 // タイトル
