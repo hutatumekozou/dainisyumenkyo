@@ -23,6 +23,19 @@ enum QuizTopic: CaseIterable, Identifiable {
     case selectionHealthDisabilities2
     case marubatsuLivingEnvironment
     case selectionLivingEnvironment
+    case frequentQuestion1
+    case frequentQuestion2
+    case frequentQuestion3
+    case frequentQuestion4
+    case frequentQuestion5
+    case basicQuestionsPart1
+    case basicQuestionsPart2
+    case basicQuestionsPart3
+    case basicQuestionsPart4
+    case basicQuestionsPart5
+
+
+
     
     var id: String { category }
     
@@ -51,6 +64,16 @@ enum QuizTopic: CaseIterable, Identifiable {
         case .selectionHealthDisabilities2: return "【選択】健康・障害2"
         case .marubatsuLivingEnvironment: return "【◯✖️】住環境整備"
         case .selectionLivingEnvironment: return "【選択】住環境整備"
+        case .frequentQuestion1: return "よく出る問題 1"
+        case .frequentQuestion2: return "よく出る問題 2"
+        case .frequentQuestion3: return "よく出る問題 3"
+        case .frequentQuestion4: return "よく出る問題 4"
+        case .frequentQuestion5: return "よく出る問題 5"
+        case .basicQuestionsPart1: return "問題1-10"
+        case .basicQuestionsPart2: return "問題11-20"
+        case .basicQuestionsPart3: return "問題21-30"
+        case .basicQuestionsPart4: return "問題31-40"
+        case .basicQuestionsPart5: return "問題41-50"
         }
     }
     
@@ -77,12 +100,25 @@ enum QuizTopic: CaseIterable, Identifiable {
         case .selectionHealthDisabilities2: return "selection_health_disability_2"
         case .marubatsuLivingEnvironment: return "marubatsu_living_environment"
         case .selectionLivingEnvironment: return "selection_living_environment"
+        case .frequentQuestion1: return "frequent_question_1"
+        case .frequentQuestion2: return "frequent_question_2"
+        case .frequentQuestion3: return "frequent_question_3"
+        case .frequentQuestion4: return "frequent_question_4"
+        case .frequentQuestion5: return "frequent_question_5"
+        case .basicQuestionsPart1: return "basic_questions_part1"
+        case .basicQuestionsPart2: return "basic_questions_part2"
+        case .basicQuestionsPart3: return "basic_questions_part3"
+        case .basicQuestionsPart4: return "basic_questions_part4"
+        case .basicQuestionsPart5: return "basic_questions_part5"
         }
     }
     
     var isMaruBatsu: Bool {
         switch self {
-        case .marubatsuElderlyDisabled, .marubatsuElderlyDisabled2, .marubatsuElderlyDisabled3, .marubatsuHealthDisabilities, .marubatsuHealthDisabilities2, .marubatsuHealthDisabilities3, .marubatsuLivingEnvironment:
+        case .marubatsuElderlyDisabled, .marubatsuElderlyDisabled2, .marubatsuElderlyDisabled3, .marubatsuHealthDisabilities, .marubatsuHealthDisabilities2, .marubatsuHealthDisabilities3, .marubatsuLivingEnvironment, .frequentQuestion1, .frequentQuestion2, .frequentQuestion3, .frequentQuestion4, .frequentQuestion5, .basicQuestionsPart1, .basicQuestionsPart2, .basicQuestionsPart3, .basicQuestionsPart4, .basicQuestionsPart5:
+
+
+
             return true
         default:
             return false
@@ -91,10 +127,11 @@ enum QuizTopic: CaseIterable, Identifiable {
 }
 
 enum QuizChapter: String, CaseIterable, Identifiable {
-    case general = "総合"
-    case elderly = "①高齢者障害者"
-    case health = "②健康・障害"
-    case environment = "③住環境整備"
+    case basic = "基礎問題part1"
+    case frequent = "よく出る問題"
+
+
+
     
     var id: String { rawValue }
     
@@ -102,47 +139,37 @@ enum QuizChapter: String, CaseIterable, Identifiable {
     
     var topics: [QuizTopic] {
         switch self {
-        case .general:
+        case .frequent:
             return [
-                .coordinator1, .coordinator2,
-                .health1, .health2,
-                .counseling1, .counseling2,
-                .environment1, .environment2,
-                .welfare1, .welfare2
+                .frequentQuestion1,
+                .frequentQuestion2,
+                .frequentQuestion3,
+                .frequentQuestion4,
+                .frequentQuestion5
             ]
-        case .elderly:
+        case .basic:
             return [
-                .marubatsuElderlyDisabled,
-                .marubatsuElderlyDisabled2,
-                .marubatsuElderlyDisabled3,
-                .selectionElderlyDisabled
+                .basicQuestionsPart1,
+                .basicQuestionsPart2,
+                .basicQuestionsPart3,
+                .basicQuestionsPart4,
+                .basicQuestionsPart5
             ]
-        case .health:
-            return [
-                .marubatsuHealthDisabilities,
-                .marubatsuHealthDisabilities2,
-                .marubatsuHealthDisabilities3,
-                .selectionHealthDisabilities,
-                .selectionHealthDisabilities2
-            ]
-        case .environment:
-            return [
-                .marubatsuLivingEnvironment,
-                .selectionLivingEnvironment
-            ]
+
+
+
+
         }
     }
     
     var color: Color {
         switch self {
-        case .general:
-            return Color(red: 0.2, green: 0.4, blue: 0.8) // Blue-ish
-        case .elderly:
-            return Color(red: 0.8, green: 0.4, blue: 0.2) // Orange-ish (Just to differentiate if needed, or stick to theme)
-        case .health:
-            return Color(red: 0.2, green: 0.6, blue: 0.4) // Green-ish
-        case .environment:
-            return Color(red: 0.5, green: 0.2, blue: 0.8) // Purple-ish
+        case .frequent:
+             return Color(red: 0.9, green: 0.3, blue: 0.3) // Red-ish for frequent/important
+        case .basic:
+             return Color(red: 0.2, green: 0.6, blue: 0.9) // Blue-ish for basic
+
+
         }
     }
 }

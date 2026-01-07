@@ -9,6 +9,7 @@ struct Question: Codable, Identifiable {
     let answerLabel: String
     let answerIndex: Int
     let explanation: String
+    let imageName: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -20,6 +21,7 @@ struct Question: Codable, Identifiable {
         case answerIndex = "answer_index"
         case correct
         case explanation
+        case imageName = "image_name"
     }
     
     init(
@@ -29,7 +31,8 @@ struct Question: Codable, Identifiable {
         choices: [String],
         answerLabel: String? = nil,
         answerIndex: Int,
-        explanation: String
+        explanation: String,
+        imageName: String? = nil
     ) {
         self.id = id
         self.category = category
@@ -38,6 +41,7 @@ struct Question: Codable, Identifiable {
         self.answerIndex = answerIndex
         self.answerLabel = answerLabel ?? Question.label(for: answerIndex)
         self.explanation = explanation
+        self.imageName = imageName
     }
     
     init(from decoder: Decoder) throws {
@@ -72,15 +76,6 @@ struct Question: Codable, Identifiable {
         if let id = try container.decodeIfPresent(String.self, forKey: .id) {
             self.id = id
         } else {
-            // Generate stable ID from question text using SHA256 (or simple generic hash if CryptoKit is overkill, but SHA256 is safe)
-            // Using a simple stable hash mechanism to avoid extra imports if possible, but let's just use the text itself as ID to be absolutely safe and simple for now?
-            // User requested ID. Long ID is okay.
-            // Actually, let's use a very simple custom hash to keep it short enough but stable.
-            // Or just Base64 of the text.
-            // Let's use simple string as ID if it's not too long, otherwise hash.
-            // Actually, let's just use the question text directly to match exact question.
-            // But wait, userDefaults limit? 20 questions stored is tiny.
-            // Let's use:
              self.id = questionTextUnwrapped // Fallback to question text as ID
         }
         self.category = try container.decodeIfPresent(String.self, forKey: .category) ?? "未分類"
@@ -89,6 +84,7 @@ struct Question: Codable, Identifiable {
         self.answerIndex = answerIndexUnwrapped
         self.answerLabel = decodedLabel ?? derivedLabel
         self.explanation = try container.decode(String.self, forKey: .explanation)
+        self.imageName = try container.decodeIfPresent(String.self, forKey: .imageName)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -100,6 +96,7 @@ struct Question: Codable, Identifiable {
         try container.encode(answerLabel, forKey: .answerLabel)
         try container.encode(answerIndex, forKey: .answerIndex)
         try container.encode(explanation, forKey: .explanation)
+        try container.encode(imageName, forKey: .imageName)
     }
     
     private static func label(for index: Int) -> String {
