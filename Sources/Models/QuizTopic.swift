@@ -127,8 +127,8 @@ enum QuizTopic: CaseIterable, Identifiable {
 }
 
 enum QuizChapter: String, CaseIterable, Identifiable {
-    case basic = "基礎問題part1"
-    case frequent = "よく出る問題"
+    case basic = "よく出る問題part1"
+    case frequent = "よく出る問題part2"
 
 
 
@@ -164,10 +164,8 @@ enum QuizChapter: String, CaseIterable, Identifiable {
     
     var color: Color {
         switch self {
-        case .frequent:
-             return Color(red: 0.9, green: 0.3, blue: 0.3) // Red-ish for frequent/important
-        case .basic:
-             return Color(red: 0.2, green: 0.6, blue: 0.9) // Blue-ish for basic
+        case .frequent, .basic:
+             return Color(red: 0.2, green: 0.7, blue: 0.9) // Light Blue (Mizuiro)
 
 
         }

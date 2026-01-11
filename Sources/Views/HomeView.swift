@@ -63,12 +63,12 @@ struct HomeView: View {
     
     private var titleSection: some View {
         VStack(spacing: 8) {
-            Text("福祉住環境")
+            Text("第二種免許")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
             
-            Text("コーディネーター2級")
+            Text("試験対策")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
@@ -84,9 +84,9 @@ struct HomeView: View {
     private func chapterButton(for chapter: QuizChapter) -> some View {
         Text(chapter.title)
             .font(.system(size: 28, weight: .bold)) // Larger font for main menu
-            .foregroundColor(Color(red: 0.2, green: 0.4, blue: 0.8))
+            .foregroundColor(.white)
             .frame(maxWidth: .infinity, minHeight: 120) // Large buttons
-            .background(Color.white)
+            .background(chapter.color)
             .cornerRadius(20)
             .shadow(color: .gray.opacity(0.3), radius: 6, x: 0, y: 4)
     }
@@ -235,7 +235,6 @@ struct ChapterView: View {
                 // クイズボタングリッド
                 ScrollView {
                     LazyVGrid(columns: [
-                        GridItem(.flexible(), spacing: 16),
                         GridItem(.flexible(), spacing: 16)
                     ], spacing: 16) {
                         ForEach(chapter.topics) { topic in
